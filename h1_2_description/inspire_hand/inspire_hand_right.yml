@@ -1,0 +1,17 @@
+retargeting:
+  type: vector
+  urdf_path: inspire_hand/inspire_hand_right2.urdf
+
+  # Target refers to the retargeting target, which is the robot hand
+  target_joint_names: [ 'R_pinky_proximal_joint', 'R_ring_proximal_joint', 'R_middle_proximal_joint', 'R_index_proximal_joint',
+                        'R_thumb_proximal_pitch_joint', 'R_thumb_proximal_yaw_joint' ]
+  target_origin_link_names: [ "base", "base", "base", "base", "base" ]
+  target_task_link_names: [ "R_thumb_tip",  "R_index_tip", "R_middle_tip", "R_ring_tip", "R_pinky_tip" ]
+  scaling_factor: 1.15
+
+  # Source refers to the retargeting input, which usually corresponds to the human hand
+  # The joint indices of human hand joint which corresponds to each link in the target_link_names
+  target_link_human_indices: [ [ 0, 0, 0, 0, 0 ], [ 5, 10, 15, 20, 25] ]
+
+  # A smaller alpha means stronger filtering, i.e. more smooth but also larger latency
+  low_pass_alpha: 0.2

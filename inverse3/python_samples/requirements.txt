@@ -1,0 +1,3 @@
+HaplyHardwareAPI
+vpython
+pyquaternion

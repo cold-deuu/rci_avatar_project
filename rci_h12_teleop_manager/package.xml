@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>rci_h12_teleop_manager</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="lee081847@khu.ac.kr">user</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- Python 실행 의존성 -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>action_interface</exec_depend>
+
+  <exec_depend>ament_index_python</exec_depend>
+
+
+
+  <!-- 메시지 관련 의존성 (build + exec에 둘 다!) -->
+  <build_depend>std_msgs</build_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <depend>action_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+
+
+  <!-- rosidl 설정 -->
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <build_depend>rosidl_default_runtime</build_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+  
+  <!-- 컨트롤 관련 실행 의존성 -->
+  <exec_depend>control_msgs</exec_depend>
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>imu_sensor_broadcaster</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>velocity_controllers</exec_depend>
+
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
