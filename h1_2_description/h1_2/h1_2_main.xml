@@ -1,0 +1,8 @@
+<mujoco model="full_scene">
+  <compiler angle="radian" coordinate="local"/>
+  <option timestep="0.002"/>
+
+  <include file="scene.xml"/>
+  <include file="h1_2_manip.xml"/>
+
+</mujoco>

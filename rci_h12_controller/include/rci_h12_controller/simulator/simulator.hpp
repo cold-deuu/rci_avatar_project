@@ -76,6 +76,8 @@ namespace rci_simulator
         rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
         rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr ar_sensor_sub_;
         rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
+        rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr oMi_publisher_;
+        rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr target_publisher_;
 
         // Robot Data
         Eigen::VectorXd q_, v_;
@@ -83,6 +85,10 @@ namespace rci_simulator
         // Target
         pinocchio::SE3 target_l_;
         pinocchio::SE3 target_r_;
+
+        // EEF
+        pinocchio::SE3 oMi_l_;
+        pinocchio::SE3 oMi_r_;
 
 
         int nq_, nv_;
@@ -95,6 +101,7 @@ namespace rci_simulator
 
         void initialize();
         void publish(std::vector<Eigen::VectorXd> qdes_list);
+        void tracking_publish();
 
     };
 }

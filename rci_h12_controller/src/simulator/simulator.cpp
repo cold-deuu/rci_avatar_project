@@ -28,6 +28,8 @@ namespace rci_simulator
 
         // Publisher
         publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("/mujoco_ctrl", 10);
+        oMi_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("/rci_teleop_simulator/eef_pose", 10);
+        target_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("/rci_teleop_simulator/target_pose", 10);
 
         // Subscirber 
         joint_state_sub_ = this->create_subscription<sensor_msgs::msg::JointState>("/mujoco/joint_states", 10,std::bind(&H12_Simulator::joint_state_callback, this, std::placeholders::_1));
@@ -48,11 +50,14 @@ namespace rci_simulator
         {
             ctrl_->update_controller(q_,v_);
             auto dual_oMi = ctrl_->get_dual_oMi();
+            oMi_l_ = dual_oMi[0];
+            oMi_r_ = dual_oMi[1];
+            
             if(init_)
             {
                 target_l_ = dual_oMi[0];
                 target_r_ = dual_oMi[1];
-                target_l_.translation()(0) += 0.1;
+                target_l_.translation()(0) += 0.07;
                 target_r_.translation()(2) += 0.1;    
                 init_ = false;
             }
@@ -60,7 +65,9 @@ namespace rci_simulator
             std::vector<pinocchio::SE3> target_list = {target_l_, target_r_};
             auto [qdes_list, ok] = ctrl_->init_teleop(target_list);
 
+
             this->publish(qdes_list);
+            this->tracking_publish();
             if(ok)
             {
                 RCLCPP_INFO(this->get_logger(), "Control Finished!");
@@ -117,6 +124,26 @@ namespace rci_simulator
         }
 
         publisher_->publish(msg);
+    }
+    void H12_Simulator::tracking_publish()
+    {
+        Eigen::VectorXd target_l_6d = pinocchio::log6(target_l_).toVector();
+        Eigen::VectorXd target_r_6d = pinocchio::log6(target_r_).toVector();
+        Eigen::VectorXd oMi_l_6d = pinocchio::log6(oMi_l_).toVector();
+        Eigen::VectorXd oMi_r_6d = pinocchio::log6(oMi_r_).toVector();
+        
+        std_msgs::msg::Float64MultiArray msg_target;
+        msg_target.data.resize(12);
+        std::copy(target_l_6d.data(), target_l_6d.data()+6, msg_target.data.begin());
+        std::copy(target_r_6d.data(), target_r_6d.data()+6, msg_target.data.begin()+6);
+
+        std_msgs::msg::Float64MultiArray msg_oMi;
+        msg_oMi.data.resize(12);
+        std::copy(oMi_l_6d.data(), oMi_l_6d.data()+6, msg_oMi.data.begin());
+        std::copy(oMi_r_6d.data(), oMi_r_6d.data()+6, msg_oMi.data.begin()+6);
+
+        target_publisher_->publish(msg_target);
+        oMi_publisher_->publish(msg_oMi);
     }
 
 

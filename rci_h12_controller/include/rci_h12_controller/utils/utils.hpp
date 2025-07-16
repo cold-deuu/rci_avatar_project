@@ -41,6 +41,11 @@ namespace rci_utils
             return true;
         }
         else{
+            // std::cout<<"Target l :"<<target_l<<std::endl;
+            // std::cout<<"Target r :"<<target_r<<std::endl;
+            // std::cout<<"oMi l :"<<oMi_l<<std::endl;
+            // std::cout<<"oMi r :"<<oMi_r<<std::endl;
+
             return false;
         }
         
