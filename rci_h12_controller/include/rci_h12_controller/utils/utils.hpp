@@ -41,8 +41,6 @@ namespace rci_utils
             return true;
         }
         else{
-            std::cout<<"Error l : "<<pinocchio::log6(oMi_l.inverse() * target_l).toVector().norm()<<std::endl;
-            std::cout<<"Error r : "<<pinocchio::log6(oMi_r.inverse() * target_r).toVector().norm()<<std::endl;
             return false;
         }
         
