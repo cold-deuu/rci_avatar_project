@@ -1,0 +1,10 @@
+geometry_msgs/PoseArray target
+float64 duration
+bool relative
+---
+bool success
+geometry_msgs/Pose final_position
+---
+float64 progress
+
+

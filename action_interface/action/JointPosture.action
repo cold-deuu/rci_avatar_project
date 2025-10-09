@@ -1,0 +1,8 @@
+float64[] target
+float64 duration
+---
+bool success
+geometry_msgs/Pose final_position
+---
+float64 progress
+

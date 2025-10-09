@@ -1,0 +1,6 @@
+# Directories to ignore
+dex-retargeting/
+inverse3/
+
+# Files to ignore
+MUJOCO_LOG.TXT
